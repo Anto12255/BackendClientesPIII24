@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const clientRoutes = require('./routes/ClientRoutes');
 const cors = require('cors');
 require('dotenv').config(); // Cargar las variables de entorno
-
+const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT ||  5001;
 
@@ -34,6 +34,19 @@ app.options('*', (req, res) => {
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization/json");
     res.sendStatus(200);
 });
+
+// Agregar encabezado Content Security Policy (CSP)
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // Permite solo recursos del mismo origen
+      scriptSrc: ["'self'", "https://vercel.live"], // Permite scripts de Vercel
+      connectSrc: ["'self'", "https://vercel.live"], // Permite conexiones a Vercel
+      imgSrc: ["'self'", "https://vercel.live"], // Permite imágenes de Vercel
+      styleSrc: ["'self'", "https://vercel.live"], // Permite estilos de Vercel
+    },
+  })
+);
 app.use(express.json());
 // Rutas
 app.use('/api', require('./routes/ClientRoutes'));
