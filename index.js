@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(express.json());
 // Habilitar CORS
 const corsOptions = {
-    origin: 'http://localhost:3000', // Cambia esto si tu cliente está en otro dominio
+    origin: 'https://auth0-login-piii-24.vercel.app/', // Cambia esto si tu cliente está en otro dominio
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
@@ -29,7 +29,7 @@ app.use(cors(corsOptions));
 
 // Manejo de solicitudes OPTIONS para CORS preflight
 app.options('*', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", "https://auth0-login-piii-24.vercel.app/");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization/json");
     res.sendStatus(200);
